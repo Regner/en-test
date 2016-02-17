@@ -42,7 +42,7 @@ class TestResource(Resource):
 
         args = parser.parse_args(strict=True)
         
-        logger.info('Sending test notification for {} with the following args: {}.'.format(character_id, args))
+        app.logger.info('Sending test notification for {} with the following args: {}.'.format(character_id, args))
         
         PS_TOPIC.publish(
             '',
