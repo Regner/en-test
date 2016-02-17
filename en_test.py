@@ -45,7 +45,7 @@ class TestResource(Resource):
         app.logger.info('Sending test notification for {} with the following args: {}.'.format(character_id, args))
         
         PS_TOPIC.publish(
-            '',
+            'send_notification',
             url=args['url'],
             title=args['title'],
             subtitle=args['subtitle'],
