@@ -5,7 +5,6 @@ import json
 import logging
 
 from gcloud import pubsub
-from eveauth.contrib.flask import authenticate
 
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
@@ -30,28 +29,26 @@ if not PS_TOPIC.exists():
 
 
 class TestResource(Resource):
-    @authenticate()
     def post(self):
-        character_id = request.token['character_id']
-        character_ids_json = json.dumps([character_id])
-        
         parser = reqparse.RequestParser()
         parser.add_argument('title', type=str, required=True)
         parser.add_argument('subtitle', type=str, required=True)
         parser.add_argument('url', type=str, required=True)
+        parser.add_argument('topic', type=str, required=True)
 
         args = parser.parse_args(strict=True)
         
-        app.logger.info('Sending test notification for {} with the following args: {}.'.format(character_id, args))
+        app.logger.info('Sending test notification with the following args: {}.'.format(args))
+        
+        topic = 'tests/{}'.format(args['topic'])
         
         PS_TOPIC.publish(
-            'send_notification',
+            '',
             url=args['url'],
             title=args['title'],
             subtitle=args['subtitle'],
             service='en-test',
-            character_ids=character_ids_json,
-            collapse_key='en-test',
+            topic=topic,
         )
         
         return 201
