@@ -40,7 +40,7 @@ class TestResource(Resource):
         
         app.logger.info('Sending test notification with the following args: {}.'.format(args))
         
-        topic = 'tests/{}'.format(args['topic'])
+        topics = json.dumps(['tests-{}'.format(args['topic'])])
         
         PS_TOPIC.publish(
             '',
@@ -48,7 +48,7 @@ class TestResource(Resource):
             title=args['title'],
             subtitle=args['subtitle'],
             service='en-test',
-            topic=topic,
+            topics=topics,
         )
         
         return 201
