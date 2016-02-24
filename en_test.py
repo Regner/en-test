@@ -34,13 +34,12 @@ class TestResource(Resource):
         parser.add_argument('title', type=str, required=True)
         parser.add_argument('subtitle', type=str, required=True)
         parser.add_argument('url', type=str, required=True)
-        parser.add_argument('topic', type=str, required=True)
 
         args = parser.parse_args(strict=True)
         
         app.logger.info('Sending test notification with the following args: {}.'.format(args))
         
-        topics = json.dumps([args['topic']])
+        topics = json.dumps(["testing"])
         
         PS_TOPIC.publish(
             '',
