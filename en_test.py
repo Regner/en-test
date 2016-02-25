@@ -50,7 +50,7 @@ class TestResource(Resource):
             topics=topics,
         )
         
-        return 201
+        return {}, 201
     
 api.add_resource(TestResource, '/external/')
 
