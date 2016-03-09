@@ -1,7 +1,6 @@
 
 
 import os
-import json
 import logging
 
 from gcloud import pubsub
@@ -39,15 +38,13 @@ class TestResource(Resource):
         
         app.logger.info('Sending test notification with the following args: {}.'.format(args))
         
-        topics = json.dumps(["testing"])
-        
         PS_TOPIC.publish(
             '',
             url=args['url'],
             title=args['title'],
             subtitle=args['subtitle'],
             service='en-test',
-            topics=topics,
+            topic='testing',
         )
         
         return {}, 201
